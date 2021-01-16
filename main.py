@@ -1,4 +1,3 @@
-import os
 import csv
 from document import Document
 from vocabulary import Vocabulary
@@ -77,6 +76,8 @@ with open(CSV_PATH, 'r', newline='') as file:
             'state': row[1],
             'name': row[0]
         }
+        if '|' in data['name']:
+            data['name'] = data['name'].replace('|', '')
         if data['state'] != 'successful' and data['state'] != 'failed':
             continue
         data['document'].preprocess()   # 先將文章預處理
@@ -119,5 +120,3 @@ write_tf_idf(training_data, 'training_tfidf.csv', vocabulary)
 write_tf_idf(validation_data, 'validation_tfidf.csv', vocabulary)
 write_tf_idf(testing_data, 'testing_tfidf.csv', vocabulary)
 
-
-print(vocabulary.get_terms())
